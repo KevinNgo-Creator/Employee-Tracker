@@ -3,7 +3,7 @@ const inquirer = require('inquirer')
 
 const connection = mysql.createConnection({
   host: 'localhost',
-  port: 8000,
+  port: 3306,
   user: 'root',
   database: 'employee_tracker_db',
   password: 'Bear!8553917'
