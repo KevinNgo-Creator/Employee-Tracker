@@ -3,10 +3,10 @@ const inquirer = require('inquirer')
 
 const connection = mysql.createConnection({
   host: 'localhost',
-  port: 3306,
+  port: 8000,
   user: 'root',
-  database: 'employee_tracker',
-  password: ''
+  database: 'employee_tracker_db',
+  password: 'Bear!8553917'
 })
 
 connection.connect(function (err) {
@@ -14,12 +14,9 @@ connection.connect(function (err) {
   runSearch()
 })
 
-// asks questions
-
 function runSearch () {
   inquirer
     .prompt({
-
       type: 'list',
       name: 'action',
       message: 'What would you like to do?',
@@ -68,7 +65,6 @@ function runSearch () {
     })
 }
 
-// 'View All Employees':
 function employeeSearch () {
   var query = 'SELECT * FROM employee'
   connection.query(query, function (err, res) {
@@ -78,7 +74,6 @@ function employeeSearch () {
   })
 }
 
-// 'View Employees by Manager'
 function viewDepartment () {
   connection.query('SELECT * FROM department', function (err, res) {
     if (err) throw err
@@ -87,7 +82,6 @@ function viewDepartment () {
   })
 }
 
-// 'View Department'
 function departmentSearch () {
   inquirer
     .prompt({
@@ -102,17 +96,8 @@ function departmentSearch () {
       ]
     })
     .then(function (answer) {
-      // const roleID = 'answer.choices'
-      // retreive id associated with role user chose
-      // use id to search employee table that matches that role id
-
-      // connection.query(`SELECT * FROM department id WHERE id =  "${answer.choices})"`, function (err, res) {
-      connection.query(`SELECT * FROM department WHERE name = "${answer.choices}"`, function (err, res) {
+         connection.query(`SELECT * FROM department WHERE name = "${answer.choices}"`, function (err, res) {
         if (err) throw err
-        // for (var i = 0; i <res.length; i++) {
-        //   console.log(res[i].id +
-        // }
-        // console.log(res[i].answer)
         console.table(res)
         runSearch()
       })
@@ -179,7 +164,6 @@ const addEmployee = () => {
       })
     })
 }
-// delete employee
 const deleteEmployee = () => {
   inquirer.prompt([
     {
