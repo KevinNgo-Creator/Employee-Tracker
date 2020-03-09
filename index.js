@@ -6,7 +6,7 @@ const connection = mysql.createConnection({
   port: 3306,
   user: 'root',
   database: 'employee_tracker_db',
-  password: ''
+  password: 'Bear!8553917'
 })
 
 connection.connect(function (err) {
@@ -24,7 +24,6 @@ function runSearch () {
         'View All Employees',
         'View Employees by Manager',
         'View Department',
-        'View Employee by Role',
         'Add Employee',
         'Delete Employee',
         'Update Employee Role',
@@ -35,7 +34,7 @@ function runSearch () {
       console.log(answer)
       switch (answer.action) {
         case 'View All Employees':
-          employeeSearch()
+          employeeSeah()
           break
 
         case 'View Employees by Manager':
