@@ -3,10 +3,10 @@ const inquirer = require('inquirer')
 
 const connection = mysql.createConnection({
   host: 'localhost',
-  port: 3306,
+  port: 8000,
   user: 'root',
   database: 'employee_tracker_db',
-  password: 'Bear!8553917'
+  password: ''
 })
 
 connection.connect(function (err) {
@@ -17,6 +17,7 @@ connection.connect(function (err) {
 function runSearch () {
   inquirer
     .prompt({
+
       type: 'list',
       name: 'action',
       message: 'What would you like to do?',
@@ -24,6 +25,7 @@ function runSearch () {
         'View All Employees',
         'View Employees by Manager',
         'View Department',
+        'View Employee by Role',
         'Add Employee',
         'Delete Employee',
         'Update Employee Role',
@@ -31,10 +33,9 @@ function runSearch () {
 
     })
     .then(function (answer) {
-      console.log(answer)
       switch (answer.action) {
         case 'View All Employees':
-          employeeSeah()
+          employeeSearch()
           break
 
         case 'View Employees by Manager':
@@ -69,6 +70,7 @@ function employeeSearch () {
   connection.query(query, function (err, res) {
     if (err) throw err
     console.table(res)
+
     runSearch()
   })
 }
@@ -77,6 +79,7 @@ function viewDepartment () {
   connection.query('SELECT * FROM department', function (err, res) {
     if (err) throw err
     console.table(res)
+
     runSearch()
   })
 }
@@ -88,15 +91,17 @@ function departmentSearch () {
       name: 'choice',
       message: 'View Department?',
       choices: ['Human Resources',
-                'Accounting',
-                'Marketing',
-                'IT',
-                'Sales'
+        'Accounting',
+        'Marketing',
+        'IT',
+        'Sales'
       ]
     })
     .then(function (answer) {
-         connection.query(`SELECT * FROM department WHERE name = "${answer.choices}"`, function (err, res) {
+
+      connection.query(`SELECT * FROM department WHERE name = "${answer.choices}"`, function (err, res) {
         if (err) throw err
+   
         console.table(res)
         runSearch()
       })
@@ -104,7 +109,6 @@ function departmentSearch () {
 }
 
 const updateRole = () => {
-  
   connection.query('SELECT *  FROM employee', function (err, res) {
     if (err) throw err
     console.table(res)
@@ -163,6 +167,7 @@ const addEmployee = () => {
       })
     })
 }
+
 const deleteEmployee = () => {
   inquirer.prompt([
     {
